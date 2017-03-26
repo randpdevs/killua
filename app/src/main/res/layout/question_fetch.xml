@@ -1,0 +1,195 @@
+<?xml version="1.0" encoding="utf-8"?>
+<AbsoluteLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:weightSum="1">
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="FetchQues"
+        android:id="@+id/fetchQuesButton"
+        android:layout_weight="0.13"
+        android:onClick="onClick"
+        android:layout_alignParentBottom="true"
+        android:layout_toStartOf="@+id/answerButton8"
+        android:layout_x="134dp"
+        android:layout_y="469dp" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="124dp"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:id="@+id/textView"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentEnd="true"
+        android:layout_x="-5dp"
+        android:layout_y="60dp"
+        android:layout_gravity="center_horizontal"
+        android:textSize="50dp"/>
+
+    <Button
+        android:layout_width="120dp"
+        android:layout_height="60dp"
+        android:text="1"
+        android:id="@+id/answerButton1"
+        android:layout_marginTop="50dp"
+        android:layout_below="@+id/textView"
+        android:layout_alignParentStart="true"
+        android:layout_x="5dp"
+        android:layout_y="245dp"
+        android:onClick="button1Function"/>
+
+    <Button
+        android:layout_width="120dp"
+        android:layout_height="60dp"
+        android:text="2"
+        android:id="@+id/answerButton2"
+        android:layout_alignTop="@+id/answerButton1"
+        android:layout_centerHorizontal="true"
+        android:layout_x="127dp"
+        android:layout_y="245dp"
+        android:onClick="button2Function"/>
+
+    <Button
+        android:layout_width="120dp"
+        android:layout_height="60dp"
+        android:text="3"
+        android:id="@+id/answerButton3"
+        android:layout_alignTop="@+id/answerButton2"
+        android:layout_alignParentEnd="true"
+        android:layout_x="248dp"
+        android:layout_y="243dp"
+        android:onClick="button3Function"/>
+
+    <Button
+        android:layout_width="120dp"
+        android:layout_height="60dp"
+        android:text="4"
+        android:id="@+id/answerButton4"
+        android:layout_below="@+id/answerButton1"
+        android:layout_alignParentStart="true"
+        android:layout_marginTop="49dp"
+        android:layout_x="4dp"
+        android:layout_y="299dp"
+        android:onClick="button4Function"/>
+
+    <Button
+        android:layout_width="120dp"
+        android:layout_height="60dp"
+        android:text="5"
+        android:id="@+id/answerButton5"
+        android:layout_alignTop="@+id/answerButton4"
+        android:layout_centerHorizontal="true"
+        android:layout_x="127dp"
+        android:layout_y="300dp"
+        android:onClick="button5Function"/>
+
+    <Button
+        android:layout_width="120dp"
+        android:layout_height="60dp"
+        android:text="6"
+        android:id="@+id/answerButton6"
+        android:layout_alignTop="@+id/answerButton5"
+        android:layout_alignParentEnd="true"
+        android:layout_x="251dp"
+        android:layout_y="298dp"
+        android:onClick="button6Function"/>
+
+    <Button
+        android:layout_width="120dp"
+        android:layout_height="60dp"
+        android:text="7"
+        android:id="@+id/answerButton7"
+        android:layout_below="@+id/answerButton4"
+        android:layout_alignParentStart="true"
+        android:layout_marginTop="61dp"
+        android:layout_x="0dp"
+        android:layout_y="354dp"
+        android:onClick="button7Function"/>
+
+    <Button
+        android:layout_width="120dp"
+        android:layout_height="60dp"
+        android:text="8"
+        android:id="@+id/answerButton8"
+        android:layout_alignTop="@+id/answerButton7"
+        android:layout_alignStart="@+id/answerButton5"
+        android:layout_x="126dp"
+        android:layout_y="356dp"
+        android:onClick="button8Function"/>
+
+    <Button
+        android:layout_width="120dp"
+        android:layout_height="60dp"
+        android:text="9"
+        android:id="@+id/answerButton9"
+        android:layout_alignTop="@+id/answerButton8"
+        android:layout_alignParentEnd="true"
+        android:layout_x="251dp"
+        android:layout_y="355dp"
+        android:onClick="button9Function"/>
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Submit"
+        android:id="@+id/submitButton"
+        android:layout_alignParentBottom="true"
+        android:layout_toEndOf="@+id/answerButton8"
+        android:layout_x="263dp"
+        android:layout_y="469dp"
+        android:onClick="submitFunction"/>
+
+    <Button
+        android:layout_width="120dp"
+        android:layout_height="60dp"
+        android:text="0"
+        android:id="@+id/answerButton0"
+        android:layout_below="@+id/answerButton8"
+        android:layout_toStartOf="@+id/submitButton"
+        android:layout_x="126dp"
+        android:layout_y="411dp"
+        android:onClick="button0Function"/>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="61dp"
+        android:id="@+id/textViewAnswer"
+        android:layout_x="-4dp"
+        android:layout_y="188dp"
+        android:textSize="50dp"/>
+
+    <TextView
+        android:layout_width="73dp"
+        android:layout_height="47dp"
+        android:id="@+id/textViewQuesCount"
+        android:layout_x="312dp"
+        android:layout_y="2dp" />
+
+    <Button
+        android:layout_width="120dp"
+        android:layout_height="60dp"
+        android:text="&lt;--"
+        android:id="@+id/deleteButton"
+        android:layout_x="251dp"
+        android:layout_y="411dp"
+        android:onClick="deleteFunction"/>
+
+    <TextView
+        android:layout_width="80dp"
+        android:layout_height="38dp"
+        android:id="@+id/textViewUserName"
+        android:layout_x="0dp"
+        android:layout_y="-3dp" />
+
+    <TextView
+        android:layout_width="127dp"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:id="@+id/textViewCountDownTime"
+        android:layout_x="115dp"
+        android:layout_y="2dp" />
+
+</AbsoluteLayout>
