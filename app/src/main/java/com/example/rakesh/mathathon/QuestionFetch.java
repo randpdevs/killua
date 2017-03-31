@@ -1,5 +1,6 @@
 package com.example.rakesh.mathathon;
 import android.content.Intent;
+import android.content.res.Resources;
 import android.graphics.Color;
 import android.os.CountDownTimer;
 import android.os.SystemClock;
@@ -29,14 +30,40 @@ import java.util.Iterator;
 /**
  * Created by Rakesh on 3/26/2017.
  */
-public class QuestionFetch extends AppCompatActivity implements OnClickListener  {
+public class QuestionFetch extends AppCompatActivity   {
+    public static final String EXTRA_MESSAGE = "com.example.rakesh.mathathon.MESSAGE";
     JSONArray QuesBank;
-    String userName="";
-    int index=1,numOfWrongAns=0,quesSet=0,serverAnsDigits=0;
+    String userName="",rankListData="";
+    int index=1,numOfWrongAns=0,numOfCorrectAns=0,quesSet=0,serverAnsDigits=0;
     TextView textView;
     TextView textViewAnswer,textViewQuesCount,textViewUserName,textViewCountDownTime;
     long startTime,endTime;
-    long countdownStartTime,countdownEndTime;
+    long countdownStartTime,countdownEndTime,countdownBoutEndTime;
+
+    Button ansB0,ansB1,ansB2,ansB3,ansB4,ansB5,ansB6,ansB7,ansB8,ansB9;
+
+    CountDownTimer myCountDownTimer;
+    public void setButtonFunction(boolean flag)
+    {
+        ansB0.setEnabled(flag);
+        ansB1.setEnabled(flag);
+        ansB2.setEnabled(flag);
+        ansB3.setEnabled(flag);
+        ansB4.setEnabled(flag);
+        ansB5.setEnabled(flag);
+        ansB6.setEnabled(flag);
+        ansB7.setEnabled(flag);
+        ansB8.setEnabled(flag);
+        ansB9.setEnabled(flag);
+
+    }
+    @Override
+    public void onBackPressed() {
+        myCountDownTimer.cancel();
+        Intent intent = new Intent(this, MainActivity.class);
+        startActivity(intent);
+    }
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,6 +80,17 @@ public class QuestionFetch extends AppCompatActivity implements OnClickListener 
         textViewUserName=(TextView) findViewById(R.id.textViewUserName);
         textViewCountDownTime=(TextView) findViewById(R.id.textViewCountDownTime);
 
+        ansB0=(Button) findViewById(R.id.answerButton0);
+        ansB1=(Button) findViewById(R.id.answerButton1);
+        ansB2=(Button) findViewById(R.id.answerButton2);
+        ansB3=(Button) findViewById(R.id.answerButton3);
+        ansB4=(Button) findViewById(R.id.answerButton4);
+        ansB5=(Button) findViewById(R.id.answerButton5);
+        ansB6=(Button) findViewById(R.id.answerButton6);
+        ansB7=(Button) findViewById(R.id.answerButton7);
+        ansB8=(Button) findViewById(R.id.answerButton8);
+        ansB9=(Button) findViewById(R.id.answerButton9);
+        setButtonFunction(true);
 
         textViewUserName.setText(userName);
         new AsyncTask<Integer, String, String>(){
@@ -64,7 +102,8 @@ public class QuestionFetch extends AppCompatActivity implements OnClickListener 
                     long epochTime= System.currentTimeMillis()/1000;
                     jsonObject.accumulate("clientTimeStamp", epochTime);
                     System.out.println("EpochTIme"+epochTime);
-                    content=JSONSender.POSTCALL("http://172.16.4.101:8000/genQues/getQuest/", jsonObject);
+//                    "http://172.16.4.101:8000/genQues/getQuest/"
+                    content=JSONSender.POSTCALL(getString(R.string.server_path)+getString(R.string.fetch_ques_path), jsonObject);
                 }
                 catch (Exception e1){
                     Log.e("FetchQuesError: ", e1.toString()); }
@@ -79,6 +118,7 @@ public class QuestionFetch extends AppCompatActivity implements OnClickListener 
                     quesSet= row0.getInt("QuesSet");
                     countdownEndTime=row0.getInt("EndTime");
                     countdownStartTime=row0.getInt("StartTime");
+                    countdownBoutEndTime=row0.getInt("BoutEndTime");
 
                     JSONObject row=QuesBank.getJSONObject(index);
                     op = row.getString("operator");
@@ -96,19 +136,29 @@ public class QuestionFetch extends AppCompatActivity implements OnClickListener 
 
                     System.out.println("S "+countdownStartTime+" e "+countdownStartTime);
                     System.out.println("Cooldown time:"+ (countdownEndTime-countdownStartTime));
-                    new CountDownTimer((countdownEndTime-countdownStartTime)*1000, 1000) {
+                    long epochTime= System.currentTimeMillis()/1000;
+                    if ((countdownEndTime-epochTime)<0)
+                    {
+                        setButtonFunction(false);
+                        submitUserScore();
+                    }
+                    myCountDownTimer=new CountDownTimer((countdownEndTime-epochTime)*1000, 1000) {
 
                         public void onTick(long millisUntilFinished) {
                             textViewCountDownTime.setText("Time left: " + millisUntilFinished / 1000);
                         }
 
                         public void onFinish() {
-                            textViewCountDownTime.setText("done!");
+
+//                            textViewCountDownTime.setText("done!");
+                            myCountDownTimer.cancel();
+                            setButtonFunction(false);
+                            submitUserScore();
                         }
                     }.start();
 
                     } catch (Throwable t) {
-                    Log.e("My App", "Could not parse malformed JSON: \"" + result + "\"");
+                    Log.e("My App", "Could not parse malformed JSON: \"" + t + "\"");
                 }
             }
         }.execute();
@@ -199,6 +249,83 @@ public class QuestionFetch extends AppCompatActivity implements OnClickListener 
 
     }
 
+    public void fetchUserRank()
+    {
+        try {
+            JSONObject jsonObject = new JSONObject();
+            jsonObject.accumulate("questionID", quesSet);
+            jsonObject.accumulate("userName", userName);
+            jsonObject.accumulate("StartTime", countdownStartTime);
+            jsonObject.accumulate("EndTime", countdownEndTime);
+            jsonObject.accumulate("BoutEndTime", countdownBoutEndTime);
+            Intent intent = new Intent(this, RankList.class);
+            String message = "{\"}";
+            intent.putExtra("JsonData", jsonObject.toString());
+            startActivity(intent);
+        }
+        catch (Exception e)
+        {
+            System.out.println("RankListActivityIntentError:"+e);
+        }
+    }
+    public void submitUserScore()
+    {
+
+        endTime=System.currentTimeMillis()/10;
+        double tt=(numOfWrongAns*0.05)+(endTime-countdownStartTime);
+        String t=Long.toString((long)tt);
+        long div=1;
+        for (int i=1;i<=t.length();i++)
+        {
+            div=div*10;
+        }
+        double score;
+        if (numOfCorrectAns>0)
+            score=numOfCorrectAns+(1-(tt/div));
+        else
+            score=0;
+        final double totalScore=score;
+        new AsyncTask<Integer, String, String>(){
+            String content;
+            protected String doInBackground(Integer... params) {
+                try {
+                    JSONObject jsonObject = new JSONObject();
+                    jsonObject.accumulate("userScore", totalScore);
+                    jsonObject.accumulate("questionID", quesSet);
+                    jsonObject.accumulate("userName", userName);
+                    content=JSONSender.POSTCALL(getString(R.string.server_path)+getString(R.string.submit_score_path), jsonObject);
+                }
+                catch (Exception e1){
+                    Log.e("SubmitScoreError: ", e1.toString()); }
+                return content;
+            }
+            protected void onPostExecute(String result) {
+                try {
+                    long epochTime= System.currentTimeMillis()/1000;
+                    if ((countdownBoutEndTime-15-epochTime)<0)
+                    {
+                        fetchUserRank();
+                    }
+                    myCountDownTimer=new CountDownTimer(((countdownBoutEndTime-15-epochTime))*1000, 1000) {
+                       public void onTick(long millisUntilFinished) {
+                            textViewCountDownTime.setText("Rank fetch in: " + millisUntilFinished / 1000);
+                        }
+                        public void onFinish() {
+
+//                            textViewCountDownTime.setText("done!");
+                            setButtonFunction(false);
+                            myCountDownTimer.cancel();
+                            fetchUserRank();
+                        }
+                    }.start();
+
+                } catch (Throwable t) {
+                    Log.e("Submit Ranking Error", "Could not parse malformed JSON: \"" + result + "\"");
+                }
+            }
+        }.execute();
+
+    }
 
     public int matchAnswer()
     {
@@ -209,6 +336,7 @@ public class QuestionFetch extends AppCompatActivity implements OnClickListener 
             System.out.println("Matching:"+ans+" "+serverAns);
             if(ans.equalsIgnoreCase(serverAns))
             {
+                numOfCorrectAns+=1;
                 return 1;
             }
             else
@@ -243,51 +371,7 @@ public class QuestionFetch extends AppCompatActivity implements OnClickListener 
     }
     public void submitFunction(View view){
         System.out.println("Index:"+index+" QuesLength:"+QuesBank.length());
-        if(index==QuesBank.length())
-        {
-            endTime=System.currentTimeMillis()/10;
-            double tt=(numOfWrongAns*0.05)+(endTime-countdownStartTime);
-            String t=Long.toString((long)tt);
-            long div=1;
-            for (int i=1;i<=t.length();i++)
-            {
-                div=div*10;
-            }
-            final double totalScore=(QuesBank.length()-1)+(tt/div);
-            new AsyncTask<Integer, String, String>(){
-                String content;
-                protected String doInBackground(Integer... params) {
-                    try {
-                        JSONObject jsonObject = new JSONObject();
-                        jsonObject.accumulate("userScore", totalScore);
-                        jsonObject.accumulate("questionID", quesSet);
-                        jsonObject.accumulate("userName", userName);
-                        content=JSONSender.POSTCALL("http://172.16.4.101:8000/genQues/submitRanking/", jsonObject);
-                    }
-                    catch (Exception e1){
-                        Log.e("SubmitScoreError: ", e1.toString()); }
-                    return content;
-                }
-                protected void onPostExecute(String result) {
-                    try {
-                        int n1,n2;
-                        String op;
-                        QuesBank = new JSONArray(result);
-//                        JSONObject row0=QuesBank.getJSONObject(0);
-//                        quesSet= row0.getInt("QuesSet");
-//                        countdownEndTime=row0.getInt("EndTime");
-//                        countdownStartTime=row0.getInt("StartTime");
-//
-
-                    } catch (Throwable t) {
-                        Log.e("Submit Ranking Error", "Could not parse malformed JSON: \"" + result + "\"");
-                    }
-                }
-            }.execute();
-
-
-        }
-        else if (matchAnswer()==1)
+        if (matchAnswer()==1)
         {
             textView.setTextColor(Color.parseColor("#000000"));
             fetchNextQues();
@@ -301,52 +385,20 @@ public class QuestionFetch extends AppCompatActivity implements OnClickListener 
             textViewAnswer.setText("");
         }
 
+
+        if(index==QuesBank.length())
+        {
+            myCountDownTimer.cancel();
+            setButtonFunction(false);
+            submitUserScore();
+
+        }
+
     }
 
 
-    public void onClick(View view) {
-        new AsyncTask<Integer, String, String>(){
-            String content;
-            protected String doInBackground(Integer... params) {
-                try {
-                    JSONObject jsonObject = new JSONObject();
-                    jsonObject.accumulate("firstNumber", 1);
-                    jsonObject.accumulate("secondNumber", 5);
-                    content=JSONSender.POSTCALL("http://172.16.4.101:8000/genQues/genQuest1/", jsonObject);
-                }
-                catch (Exception e1)
-                {
-                    Log.e("FetchQuesError: ", e1.toString());
-                }
-                return content;
-            }
-            @Override
-            protected void onPostExecute(String result) {
-                try {
-                    int n1,n2,n3;
-                    String op;
-                    QuesBank = new JSONArray(result);
-                    JSONObject row=QuesBank.getJSONObject(0);
-                    op = row.getString("operator");
-                    n1 = row.getInt("firstNumber");
-                    n2 = row.getInt("secondNumber");
-                    n3 = row.getInt("answer");
-                    textView.setText("Ques:"+n1+" "+op+ " "+n2);
 
-//                    for (int i = 0; i < QuesBank.length(); i++) {
-//                        JSONObject row = QuesBank.getJSONObject(i);
-//                        op = row.getString("operator");
-//                        n1 = row.getInt("firstNumber");
-//                        n2 = row.getInt("secondNumber");
-//                        n3 = row.getInt("answer");
-//                        System.out.println(n1+" "+op+ " "+n2+" "+n3);
-//                    }
-                } catch (Throwable t) {
-                    Log.e("My App", "Could not parse malformed JSON: \"" + result + "\"");
-                }
-            }
-        }.execute();
-    }
+
 
 
 

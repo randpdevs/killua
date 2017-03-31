@@ -23,6 +23,18 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".MainActivity" />
         </activity>
+
+        <!--<activity android:name=".RankList"-->
+            <!--android:parentActivityName=".MainActivity" >-->
+            <!--<meta-data-->
+                <!--android:name="android.support.PARENT_ACTIVITY"-->
+                <!--android:value=".MainActivity" />-->
+        <!--</activity>-->
+        <!---->
+        <activity android:name=".RankList"
+            android:noHistory="true"/>
+        <activity android:name=".testLayoutActivity"
+            android:noHistory="true"/>
     </application>
 
 </manifest>

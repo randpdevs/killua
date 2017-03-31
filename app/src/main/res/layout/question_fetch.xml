@@ -4,18 +4,6 @@
     android:layout_height="match_parent"
     android:weightSum="1">
 
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="FetchQues"
-        android:id="@+id/fetchQuesButton"
-        android:layout_weight="0.13"
-        android:onClick="onClick"
-        android:layout_alignParentBottom="true"
-        android:layout_toStartOf="@+id/answerButton8"
-        android:layout_x="134dp"
-        android:layout_y="469dp" />
-
     <TextView
         android:layout_width="match_parent"
         android:layout_height="124dp"
@@ -130,17 +118,6 @@
         android:layout_x="251dp"
         android:layout_y="355dp"
         android:onClick="button9Function"/>
-
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Submit"
-        android:id="@+id/submitButton"
-        android:layout_alignParentBottom="true"
-        android:layout_toEndOf="@+id/answerButton8"
-        android:layout_x="263dp"
-        android:layout_y="469dp"
-        android:onClick="submitFunction"/>
 
     <Button
         android:layout_width="120dp"
