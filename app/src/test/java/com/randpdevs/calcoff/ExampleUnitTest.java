@@ -1,4 +1,4 @@
-package com.example.rakesh.mathathon;
+package com.randpdevs.calcoff;
 
 import org.junit.Test;
 

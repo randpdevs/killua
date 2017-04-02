@@ -1,14 +1,9 @@
 <resources>
-    <string name="app_name">Mathathon</string>
+    <string name="app_name">CalcOff</string>
     <string name="server_path">http://mathathon.herokuapp.com/</string>
     <!--<string name="server_path">http://172.16.4.101:8000/</string>-->
 
-    <string name="rank_list_path">genQues/getRanking/</string>
-    <string name="submit_score_path">genQues/submitRanking/</string>
-    <string name="fetch_ques_path">genQues/getQuest2/</string>
-    <string name="generate_ques_path">genQues/genQuest1/</string>
-
-
-
-
+    <string name="rank_list_path">genques/getranking/</string>
+    <string name="submit_score_path">genques/submitranking/</string>
+    <string name="fetch_ques">genques/getquestion/</string>
 </resources>

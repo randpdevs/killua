@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.rakesh.mathathon">
+    package="com.randpdevs.calcoff">
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
@@ -10,31 +10,27 @@
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".MainActivity">
+
+        <activity
+            android:name=".MainActivity"
+            android:theme="@style/AppTheme.Simple"
+            android:screenOrientation="portrait"
+            android:noHistory="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".QuestionFetch"
-            android:parentActivityName=".MainActivity" >
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value=".MainActivity" />
-        </activity>
 
-        <!--<activity android:name=".RankList"-->
-            <!--android:parentActivityName=".MainActivity" >-->
-            <!--<meta-data-->
-                <!--android:name="android.support.PARENT_ACTIVITY"-->
-                <!--android:value=".MainActivity" />-->
-        <!--</activity>-->
-        <!---->
-        <activity android:name=".RankList"
-            android:noHistory="true"/>
-        <activity android:name=".testLayoutActivity"
-            android:noHistory="true"/>
+        <activity android:name=".GamePlayActivity"
+            android:noHistory="true"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.GamePlay"/>
+        <activity android:name=".RankListActivity"
+            android:noHistory="true"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.RankList"/>
+
     </application>
 
 </manifest>
