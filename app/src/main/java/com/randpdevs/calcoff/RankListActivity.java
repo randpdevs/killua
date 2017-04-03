@@ -118,7 +118,7 @@ public class RankListActivity extends AppCompatActivity {
                         }
 
                     } catch (Throwable t) {
-                        alertBoxFunction("Oops!",t+"_Something went wrong. Please start again.","Retry","Cancel","RankListActivity","MainActivity");
+                        alertBoxFunction("Oops!","_Something went wrong. Please start again.","Retry","Cancel","RankListActivity","MainActivity");
 
                     }
                 }
@@ -127,7 +127,7 @@ public class RankListActivity extends AppCompatActivity {
         }
         catch (Exception e)
         {
-            alertBoxFunction("Oops!",e+":Something went wrong. Please start again.","Retry","Cancel","RankListActivity","MainActivity");
+            alertBoxFunction("Oops!",":Something went wrong. Please start again.","Retry","Cancel","RankListActivity","MainActivity");
 
         }
 

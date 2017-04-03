@@ -112,7 +112,7 @@ public class GamePlayActivity extends AppCompatActivity {
 
                 }
                 catch (Throwable t) {
-                    alertBoxFunction("Oops!",t+"_Something went wrong. Please start again.","Retry","Cancel","GamePlayActivity","MainActivity");
+                    alertBoxFunction("Oops!","_Something went wrong. Please start again.","Retry","Cancel","GamePlayActivity","MainActivity");
                 }
             }
         }.execute();
@@ -138,7 +138,7 @@ public class GamePlayActivity extends AppCompatActivity {
         }
         catch (Exception e)
         {
-            alertBoxFunction("Oops!",e+":_Something went wrong. Please start again.","Retry","Cancel","GamePlayActivity","MainActivity");
+            alertBoxFunction("Oops!",":_Something went wrong. Please start again.","Retry","Cancel","GamePlayActivity","MainActivity");
         }
     }
     private void submitUserScore()
@@ -198,7 +198,7 @@ public class GamePlayActivity extends AppCompatActivity {
 
 
                 } catch (Throwable t) {
-                    alertBoxFunction("Oops!",t+"~Something went wrong. Please start again.","Retry","Cancel","GamePlayActivity","MainActivity");
+                    alertBoxFunction("Oops!","~Something went wrong. Please start again.","Retry","Cancel","GamePlayActivity","MainActivity");
 
                 }
             }
@@ -259,7 +259,7 @@ public class GamePlayActivity extends AppCompatActivity {
         }
         catch (Exception er)
         {
-            alertBoxFunction("Oops!",er+"|Something went wrong. Please start again.","Retry","Cancel","GamePlayActivity","MainActivity");
+            alertBoxFunction("Oops!","|Something went wrong. Please start again.","Retry","Cancel","GamePlayActivity","MainActivity");
         }
     }
 
@@ -289,7 +289,7 @@ public class GamePlayActivity extends AppCompatActivity {
         }
         catch (Exception e)
         {
-            alertBoxFunction("Oops!",e+"#Something went wrong. Please start again.","Retry","Cancel","GamePlayActivity","MainActivity");
+            alertBoxFunction("Oops!","#Something went wrong. Please start again.","Retry","Cancel","GamePlayActivity","MainActivity");
 
         }
         return 0;

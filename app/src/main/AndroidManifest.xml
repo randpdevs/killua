@@ -31,6 +31,15 @@
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.RankList"/>
 
+        <activity android:name=".LoginActivity"
+            android:noHistory="true"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.LoginActivity"/>
+        <activity android:name=".RegisterActivity"
+            android:noHistory="true"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.LoginActivity"/>
+
     </application>
 
 </manifest>

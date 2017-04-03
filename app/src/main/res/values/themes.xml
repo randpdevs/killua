@@ -19,5 +19,9 @@
         <item name="android:windowBackground">@color/White</item>
     </style>
 
+    <style name="AppTheme.LoginActivity">
+        <item name="android:windowBackground">@color/White</item>
+    </style>
+
 
 </resources>

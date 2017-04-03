@@ -6,4 +6,10 @@
     <string name="rank_list_path">genques/getranking/</string>
     <string name="submit_score_path">genques/submitranking/</string>
     <string name="fetch_ques">genques/getquestion/</string>
+    <string name="userName_check">login/checkusername/</string>
+    <string name="user_Register">login/register/</string>
+    <string name="user_login">login/login/</string>
+
+
+
 </resources>
