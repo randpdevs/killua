@@ -366,6 +366,14 @@ private void init(){
     bc=(Button) findViewById(R.id.buttonNoC);
     bb=(Button) findViewById(R.id.buttonNoB);
     progressBar=(ProgressBar) findViewById(R.id.answerProgressBar);
+    DatabaseHandler db = new DatabaseHandler(this);
+    JSONObject jsonObject=db.fetchUserData(db.lastInsertedRowUserData());
+    try{
+        TextViewUserName.setText(jsonObject.getString("userName"));
+        userName=jsonObject.getString("userName");
+    }
+    catch (Exception e)
+    {System.out.println("SettingUserNameFailed");        }
 
 }
 private void setIntentFunction(String className)
