@@ -33,7 +33,7 @@ import java.util.TimeZone;
  * Created by Rakesh on 4/1/2017.
  */
 public class RankListActivity extends AppCompatActivity {
-    private CountDownTimer gameCountDownTimer;
+    private CountDownTimer gameCountDownTimer=null;
     private TextView TextViewGameStart;
     private  Long epochTime;
 
@@ -43,14 +43,40 @@ public class RankListActivity extends AppCompatActivity {
     private JSONArray rankListArray;
     private long countdownStartTime,countdownEndTime,countdownBoutEndTime;
     private String userName="";
-    private CountDownTimer myCountDownTimer;
+    private CountDownTimer myCountDownTimer=null;
     private Intent intentObj;
+    private boolean onPauseFlag=false;
     @Override
     public void onBackPressed() {
-        myCountDownTimer.cancel();
+        if(myCountDownTimer!=null)
+            myCountDownTimer.cancel();
         Intent intent = new Intent(this, MainActivity.class);
         startActivity(intent);
     }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if(onPauseFlag)
+        {
+            setIntentFunction("MainActivity");
+            finish();
+        }
+
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        onPauseFlag=true;
+        if(gameCountDownTimer!=null)
+            gameCountDownTimer.cancel();
+        if(myCountDownTimer!=null)
+            myCountDownTimer.cancel();
+
+    }
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -103,10 +129,10 @@ public class RankListActivity extends AppCompatActivity {
                             tv.setText(row.getString("userScore").toString());
 
                             tv = (TextView) tableRow.findViewById(R.id.correctAns);
-                            tv.setText(Integer.toString(5*i));
+                            tv.setText(row.getString("correctans").toString());
 
                             tv = (TextView) tableRow.findViewById(R.id.wrongAns);
-                            tv.setText(Integer.toString(1*i));
+                            tv.setText(row.getString("wrongans").toString());
 
                             //Add row to the table
 
@@ -175,6 +201,10 @@ public class RankListActivity extends AppCompatActivity {
             intentObj=new Intent(this, GamePlayActivity.class);
         else if (className=="RankListActivity")
             intentObj=new Intent(this, RankListActivity.class);
+        if(gameCountDownTimer!=null)
+            gameCountDownTimer.cancel();
+        if(myCountDownTimer!=null)
+            myCountDownTimer.cancel();
         startActivity(intentObj);
     }
 

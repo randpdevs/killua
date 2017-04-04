@@ -164,6 +164,11 @@ public class RegisterActivity extends AppCompatActivity {
             Toast.makeText(this, "UserName required!", Toast.LENGTH_LONG).show();
             userNameTextView.setTextColor(Color.RED);
         }
+        else if(userName.length()>10)
+        {
+            Toast.makeText(this, "UserName less than 10 characters!", Toast.LENGTH_LONG).show();
+            userNameTextView.setTextColor(Color.RED);
+        }
         else
         {
             userNameTextView.setTextColor(Color.BLACK);
@@ -187,7 +192,7 @@ public class RegisterActivity extends AppCompatActivity {
             emailTextView.setTextColor(Color.BLACK);
         }
 
-        if(userName.length()!=0 && email.length()!=0 && password.length()!=0)
+        if(userName.length()!=0 &&userName.length()<10 && email.length()!=0 && password.length()!=0)
             checkUserNameAllowed=true;
         else
             checkRegisteredAllowed=false;
@@ -218,7 +223,7 @@ public class RegisterActivity extends AppCompatActivity {
         else if (className=="RankListActivity")
             intentObj=new Intent(this, RankListActivity.class);
         else if (className=="RegisterActivity")
-            intentObj=new Intent(this, LoginActivity.class);
+            intentObj=new Intent(this, RegisterActivity.class);
 
         startActivity(intentObj);
     }

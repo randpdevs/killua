@@ -30,7 +30,7 @@ import java.util.TimeZone;
  * Created by Rakesh on 4/1/2017.
  */
 public class GamePlayActivity extends AppCompatActivity {
-    private CountDownTimer gameCountDownTimer,rankCountDownTimer,progressBarCountDownTimer;
+    private CountDownTimer gameCountDownTimer=null,rankCountDownTimer=null,progressBarCountDownTimer=null;
     private TextView TextViewCountDown,TextViewUserName,TextViewQuestionCount,TextViewQuestion,TextViewAnswer;
     private Button b0,b1,b2,b3,b4,b5,b6,b7,b8,b9,bc,bb;
     private ProgressBar progressBar;
@@ -39,7 +39,7 @@ public class GamePlayActivity extends AppCompatActivity {
     private int index=0,numOfWrongAns=0,numOfCorrectAns=0,quesSet=0,serverAnsDigits=0;
     private String userName="";
     private long startTime,endTime,countdownStartTime,countdownEndTime,countdownBoutEndTime,epochTime;
-    private boolean activityBackFlag=true;
+    private boolean activityBackFlag=true,onPauseFlag=false;
     @Override
     public void onBackPressed() {
         if (activityBackFlag)
@@ -54,6 +54,32 @@ public class GamePlayActivity extends AppCompatActivity {
         else
             return;
     }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if(onPauseFlag){
+            setIntentFunction("MainActivity");
+            finish();
+        }
+
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        onPauseFlag=true;
+        if(gameCountDownTimer!=null)
+            gameCountDownTimer.cancel();
+        if(rankCountDownTimer!=null)
+            rankCountDownTimer.cancel();
+
+        if(progressBarCountDownTimer!=null)
+            progressBarCountDownTimer.cancel();
+        super.onPause();
+    }
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -84,7 +110,7 @@ public class GamePlayActivity extends AppCompatActivity {
                     countdownStartTime=row0.getInt("StartTime");
                     countdownBoutEndTime=row0.getInt("BoutEndTime");
                     setEpochTime();
-                    fetchNextQues();
+
 
                     if ((countdownBoutEndTime-15-epochTime)<0)
                     {
@@ -93,10 +119,12 @@ public class GamePlayActivity extends AppCompatActivity {
                     else if ((countdownEndTime-epochTime)<0)
                     {
                         setButtonFunction(false);
-                        submitUserScore();
+                        countDownToRankFunction();
+                        //submitUserScore();
                     }
                     else
                     {
+                        fetchNextQues();
                         gameCountDownTimer=new CountDownTimer((countdownEndTime-epochTime)*1000, 1000) {
 
                             public void onTick(long millisUntilFinished) {
@@ -144,16 +172,18 @@ public class GamePlayActivity extends AppCompatActivity {
     private void submitUserScore()
     {
         setEpochTime();
-        double tt=(numOfWrongAns*0.05)+(epochTime-countdownStartTime);
+        double tt=(numOfWrongAns*0.25);
         String t=Long.toString((long)tt);
         long div=1;
-        for (int i=1;i<=t.length();i++)
+        for (int i=1;i<t.length();i++)
         {
             div=div*10;
         }
         double score;
         if (numOfCorrectAns>0)
-            score=numOfCorrectAns+(1-(tt/div));
+//            score=numOfCorrectAns+(1-(tt/div));
+            score=numOfCorrectAns-tt;
+
         else
             score=0;
         final double totalScore=score;
@@ -165,6 +195,9 @@ public class GamePlayActivity extends AppCompatActivity {
                     jsonObject.accumulate("userScore", totalScore);
                     jsonObject.accumulate("questionID", quesSet);
                     jsonObject.accumulate("userName",userName);
+                    jsonObject.accumulate("correctans",numOfCorrectAns);
+                    jsonObject.accumulate("wrongans",numOfWrongAns);
+
                     activityBackFlag=false;
                     content=POSTCALL_FUNCTION.POSTCALL(getString(R.string.server_path)+getString(R.string.submit_score_path), jsonObject);
 
@@ -176,25 +209,7 @@ public class GamePlayActivity extends AppCompatActivity {
             }
             protected void onPostExecute(String result) {
                 try {
-                    setEpochTime();
-                    if ((countdownBoutEndTime-15-epochTime)<0)
-                    {
-                        fetchUserRank();
-                    }
-                    else
-                    {
-                        rankCountDownTimer=new CountDownTimer(((countdownBoutEndTime-15-epochTime))*1000, 1000) {
-                            public void onTick(long millisUntilFinished) {
-                                TextViewCountDown.setText("");
-                                TextViewQuestion.setTextColor(Color.parseColor("#000000"));
-                                TextViewQuestion.setText("Rank fetch in:" + millisUntilFinished / 1000);
-                            }
-                            public void onFinish() {
-                                setButtonFunction(false);
-                                fetchUserRank();
-                            }
-                        }.start();
-                    }
+                    countDownToRankFunction();
 
 
                 } catch (Throwable t) {
@@ -204,6 +219,27 @@ public class GamePlayActivity extends AppCompatActivity {
             }
         }.execute();
 
+    }
+    private void countDownToRankFunction(){
+        setEpochTime();
+        if ((countdownBoutEndTime-15-epochTime)<0)
+        {
+            fetchUserRank();
+        }
+        else
+        {
+            rankCountDownTimer=new CountDownTimer(((countdownBoutEndTime-15-epochTime))*1000, 1000) {
+                public void onTick(long millisUntilFinished) {
+                    TextViewCountDown.setText("");
+                    TextViewQuestion.setTextColor(Color.parseColor("#000000"));
+                    TextViewQuestion.setText("Rank fetch in:" + millisUntilFinished / 1000);
+                }
+                public void onFinish() {
+                    setButtonFunction(false);
+                    fetchUserRank();
+                }
+            }.start();
+        }
     }
 
     private void answerCheck(View view,String data)
@@ -384,6 +420,12 @@ private void setIntentFunction(String className)
         intentObj=new Intent(this, GamePlayActivity.class);
     else if (className=="RankListActivity")
         intentObj=new Intent(this, RankListActivity.class);
+    if(gameCountDownTimer!=null)
+        gameCountDownTimer.cancel();
+    if(rankCountDownTimer!=null)
+        gameCountDownTimer.cancel();
+    if(progressBarCountDownTimer!=null)
+        progressBarCountDownTimer.cancel();
     startActivity(intentObj);
 }
 
@@ -409,7 +451,6 @@ private void setIntentFunction(String className)
         AlertDialog alertDialog = alertDialogBuilder.create();
         alertDialog.show();
         alertDialog.getWindow().setBackgroundDrawableResource(android.R.color.background_dark);
-
     }
     private void setEpochTime()
     {
