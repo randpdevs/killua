@@ -8,36 +8,29 @@
     tools:context="com.randpdevs.calcoff.RankListActivity">
 
 
+
+
     <TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
-        android:id="@+id/rankTableLayout">
+        android:id="@+id/leaderTableLayout"
+        android:layout_marginTop="20dp">
         <FrameLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/gameStartTextViewRankList"
-                android:textSize="25dp"
-                android:layout_gravity="center" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/rankTextViewRankList"
-                android:layout_gravity="right"
-                android:textSize="25dp" />
-
+            <View
+                android:layout_width="fill_parent"
+                android:layout_height="1dp"
+                android:background="@android:color/darker_gray"/>
         </FrameLayout>
         <TableRow android:padding="5dp"
             android:layout_width="fill_parent"
             android:layout_height="fill_parent"
-            android:background="@color/Black">
+            android:background="@color/Black"
+            android:layout_marginBottom="0dp">
             <TextView
                 android:text="Rank"
-                android:layout_width="50dp"
+                android:layout_width="60dp"
                 android:layout_height="wrap_content"
                 android:layout_column="1"
                 android:textSize="17dp"
@@ -45,36 +38,21 @@
                 android:textStyle="bold" />
             <TextView
                 android:text="UserName"
-                android:layout_width="100dp"
+                android:layout_width="150dp"
                 android:layout_height="wrap_content"
                 android:layout_column="2"
                 android:textSize="17dp"
                 android:textColor="#ffffff"
                 android:textStyle="bold" />
             <TextView
-                android:text="Score"
-                android:layout_width="60dp"
+                android:text="Max Score"
+                android:layout_width="100dp"
                 android:layout_height="wrap_content"
                 android:layout_column="3"
                 android:textSize="17dp"
                 android:textStyle="bold"
                 android:textColor="#ffffff" />
-            <TextView
-                android:text="Correct"
-                android:layout_width="65dp"
-                android:layout_height="wrap_content"
-                android:layout_column="4"
-                android:textSize="17dp"
-                android:textColor="#ffffff"
-                android:textStyle="bold" />
-            <TextView
-                android:text="Wrong"
-                android:layout_width="60dp"
-                android:layout_height="wrap_content"
-                android:layout_column="5"
-                android:textSize="17dp"
-                android:textColor="#ffffff"
-                android:textStyle="bold" />
+
         </TableRow>
 
         <FrameLayout

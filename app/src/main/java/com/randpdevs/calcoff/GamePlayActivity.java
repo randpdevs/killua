@@ -40,112 +40,155 @@ public class GamePlayActivity extends AppCompatActivity {
     private String userName="";
     private long startTime,endTime,countdownStartTime,countdownEndTime,countdownBoutEndTime,epochTime;
     private boolean activityBackFlag=true,onPauseFlag=false;
+    private  double totalUserScore;
+    private DatabaseHandler db;
+    private boolean onActivityStart=false;
     @Override
     public void onBackPressed() {
         if (activityBackFlag)
         {
-            if(gameCountDownTimer!=null)
-                gameCountDownTimer.cancel();
-            if(rankCountDownTimer!=null)
-                rankCountDownTimer.cancel();
             Intent intent = new Intent(this, MainActivity.class);
             startActivity(intent);
         }
         else
             return;
     }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-        if(onPauseFlag){
-            setIntentFunction("MainActivity");
-            finish();
-        }
-
-    }
-
-    @Override
-    protected void onPause() {
-        super.onPause();
-        onPauseFlag=true;
-        if(gameCountDownTimer!=null)
-            gameCountDownTimer.cancel();
-        if(rankCountDownTimer!=null)
-            rankCountDownTimer.cancel();
-
-        if(progressBarCountDownTimer!=null)
-            progressBarCountDownTimer.cancel();
-        super.onPause();
-    }
-
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.game_play_layout);
+    }
+
+
+    @Override
+    protected void onStart() {
+//        Toast.makeText(this, "onStart:GamePlay", Toast.LENGTH_LONG).show();
+        super.onStart();
+        if(!onActivityStart) {
+            startFunction();
+            onActivityStart=true;
+        }
+        else
+        {
+            onBackPressed();
+        }
+    }
+
+    @Override
+    protected void onResume() {
+//        Toast.makeText(this, "onResume", Toast.LENGTH_LONG).show();
+        super.onResume();
+    }
+
+    @Override
+    protected void onPause() {
+//        Toast.makeText(this, "onPause", Toast.LENGTH_LONG).show();
+        super.onPause();
+
+    }
+
+    @Override
+    protected void onPostResume() {
+//        Toast.makeText(this, "onPostResume", Toast.LENGTH_LONG).show();
+        super.onPostResume();
+    }
+
+    @Override
+    protected void onRestart() {
+//        Toast.makeText(this, "onRestart", Toast.LENGTH_LONG).show();
+        super.onRestart();
+    }
+
+
+    @Override
+    protected void onStop() {
+//        Toast.makeText(this, "onStop:GamePlay", Toast.LENGTH_LONG).show();
+        super.onStop();
+        setGameCountsToNull();
+    }
+
+    private void startFunction(){
         init();
-//       Call fetch question
+        SetUserName();
+        setEpochTime();
+        fetchQuesFromServer();
+    }
+
+
+    private void fetchQuesFromServer(){
         new AsyncTask<Integer, String, String>(){
             String content;
             protected String doInBackground(Integer... params) {
                 try {
-
                     JSONObject jsonObject = new JSONObject();
-                    jsonObject.accumulate("password", "randpdevs");
+                    jsonObject.accumulate("password", "randpdevwork");
                     content=POSTCALL_FUNCTION.POSTCALL(getString(R.string.server_path)+getString(R.string.fetch_ques), jsonObject);
                 }
                 catch (Exception e1)
                 {
-                    alertBoxFunction("Network Error!","Please check if your network conectivity is active.","Retry","Cancel","GamePlayActivity","MainActivity");
+                    alertBoxFunction("Network Error!","Please check if your network conectivity is active.","Retry","Cancel");
                 }
                 return content;
             }
             protected void onPostExecute(String result) {
-                try {
-                    QuesBank = new JSONArray(result);
-                    JSONObject row0=QuesBank.getJSONObject(0);
-                    quesSet= row0.getInt("QuesSet");
-                    countdownEndTime=row0.getInt("EndTime");
-                    countdownStartTime=row0.getInt("StartTime");
-                    countdownBoutEndTime=row0.getInt("BoutEndTime");
-                    setEpochTime();
-
-
-                    if ((countdownBoutEndTime-15-epochTime)<0)
-                    {
-                        fetchUserRank();
-                    }
-                    else if ((countdownEndTime-epochTime)<0)
-                    {
-                        setButtonFunction(false);
-                        countDownToRankFunction();
-                        //submitUserScore();
-                    }
-                    else
-                    {
-                        fetchNextQues();
-                        gameCountDownTimer=new CountDownTimer((countdownEndTime-epochTime)*1000, 1000) {
-
-                            public void onTick(long millisUntilFinished) {
-                                TextViewCountDown.setText(":" + millisUntilFinished / 1000);
-                            }
-
-                            public void onFinish() {
-                                setButtonFunction(false);
-                                submitUserScore();
-                            }
-                        }.start();
-                    }
-
+                if(result.length()!=0)
+                {
+                    SuccesOnServerFetchQues(result);
                 }
-                catch (Throwable t) {
-                    alertBoxFunction("Oops!","_Something went wrong. Please start again.","Retry","Cancel","GamePlayActivity","MainActivity");
+                else
+                {
+                    alertBoxFunction("Network Error!","Please check if your network conectivity is active.","Retry","Cancel");
                 }
             }
         }.execute();
 
     }
+    private void SuccesOnServerFetchQues(String result)
+    {
+        try {
+            QuesBank = new JSONArray(result);
+            JSONObject row0=QuesBank.getJSONObject(0);
+            quesSet= row0.getInt("QuesSet");
+            countdownEndTime=row0.getInt("EndTime");
+            countdownStartTime=row0.getInt("StartTime");
+            countdownBoutEndTime=row0.getInt("BoutEndTime");
+
+            if ((countdownBoutEndTime-15-epochTime)<0)
+            {
+                fetchUserRank();
+            }
+            else if ((countdownEndTime-epochTime)<0)
+            {
+                setButtonFunction(false);
+                countDownToRankFunction();
+            }
+            else
+            {
+                fetchNextQues();
+                CountDownTimer t;
+
+                gameCountDownTimer=new CountDownTimer((countdownEndTime-epochTime)*1000, 1000) {
+
+                    public void onTick(long millisUntilFinished) {
+                        TextViewCountDown.setText(":" + millisUntilFinished / 1000);
+                    }
+                    public void onFinish() {
+                        TextViewCountDown.setText(":0");
+                        setButtonFunction(false);
+                        submitUserScore();
+                    }
+
+                };
+                gameCountDownTimer.start();
+            }
+
+        }
+        catch (Throwable t) {
+            alertBoxFunction("Oops!","_Something went wrong. Please start again.","Retry","Cancel");
+        }
+    }
+
+
     private void fetchUserRank()
     {
         try {
@@ -157,36 +200,24 @@ public class GamePlayActivity extends AppCompatActivity {
             jsonObject.accumulate("BoutEndTime", countdownBoutEndTime);
             Intent intent = new Intent(this, RankListActivity.class);
             intent.putExtra("JsonData", jsonObject.toString());
-            if(gameCountDownTimer!=null)
-                gameCountDownTimer.cancel();
-            if(rankCountDownTimer!=null)
-                rankCountDownTimer.cancel();
-
+            setGameCountsToNull();
             startActivity(intent);
         }
         catch (Exception e)
         {
-            alertBoxFunction("Oops!",":_Something went wrong. Please start again.","Retry","Cancel","GamePlayActivity","MainActivity");
+            alertBoxFunction("Oops!",":_Something went wrong. Please start again.","Retry","Cancel");
         }
     }
     private void submitUserScore()
     {
-        setEpochTime();
-        double tt=(numOfWrongAns*0.25);
+        double tt=(numOfWrongAns*0.5);
         String t=Long.toString((long)tt);
-        long div=1;
-        for (int i=1;i<t.length();i++)
-        {
-            div=div*10;
-        }
-        double score;
         if (numOfCorrectAns>0)
-//            score=numOfCorrectAns+(1-(tt/div));
-            score=numOfCorrectAns-tt;
-
+            totalUserScore=numOfCorrectAns-tt;
         else
-            score=0;
-        final double totalScore=score;
+            totalUserScore=0;
+        final double totalScore=totalUserScore;
+
         new AsyncTask<Integer, String, String>(){
             String content;
             protected String doInBackground(Integer... params) {
@@ -203,38 +234,42 @@ public class GamePlayActivity extends AppCompatActivity {
 
                 }
                 catch (Exception e1){
-                    alertBoxFunction("Network Error!","_Please check if your network conectivity is active.","Retry","Cancel","GamePlayActivity","MainActivity");
+                    alertBoxFunction("Network Error!","_Please check if your network conectivity is active.","Retry","Cancel");
                 }
                 return content;
             }
             protected void onPostExecute(String result) {
                 try {
-                    countDownToRankFunction();
-
+                    if(result.length()!=0)
+                        countDownToRankFunction();
+                    else
+                        alertBoxFunction("Network Error!","_Please check if your network conectivity is active.","Retry","Cancel");
 
                 } catch (Throwable t) {
-                    alertBoxFunction("Oops!","~Something went wrong. Please start again.","Retry","Cancel","GamePlayActivity","MainActivity");
-
+                    alertBoxFunction("Oops!","~Something went wrong. Please start again.","Retry","Cancel");
                 }
             }
         }.execute();
 
     }
     private void countDownToRankFunction(){
-        setEpochTime();
         if ((countdownBoutEndTime-15-epochTime)<0)
         {
             fetchUserRank();
         }
         else
         {
+            setEpochTime();
             rankCountDownTimer=new CountDownTimer(((countdownBoutEndTime-15-epochTime))*1000, 1000) {
                 public void onTick(long millisUntilFinished) {
                     TextViewCountDown.setText("");
                     TextViewQuestion.setTextColor(Color.parseColor("#000000"));
-                    TextViewQuestion.setText("Rank fetch in:" + millisUntilFinished / 1000);
+                    TextViewQuestion.setTextSize(30);
+                    TextViewQuestion.setText("Fetching rank in:" + millisUntilFinished / 1000);
                 }
                 public void onFinish() {
+                    TextViewQuestion.setTextSize(30);
+                    TextViewQuestion.setText("Fetching rank in:0");
                     setButtonFunction(false);
                     fetchUserRank();
                 }
@@ -273,6 +308,7 @@ public class GamePlayActivity extends AppCompatActivity {
         else if (btn_Num=="9")
         {TextViewAnswer.setText(data+"9");}
         data=TextViewAnswer.getText().toString();
+
         answerCheck(view,data);
     }
 
@@ -295,7 +331,7 @@ public class GamePlayActivity extends AppCompatActivity {
         }
         catch (Exception er)
         {
-            alertBoxFunction("Oops!","|Something went wrong. Please start again.","Retry","Cancel","GamePlayActivity","MainActivity");
+            alertBoxFunction("Oops!","|Something went wrong. Please start again.","Retry","Cancel");
         }
     }
 
@@ -325,7 +361,7 @@ public class GamePlayActivity extends AppCompatActivity {
         }
         catch (Exception e)
         {
-            alertBoxFunction("Oops!","#Something went wrong. Please start again.","Retry","Cancel","GamePlayActivity","MainActivity");
+            alertBoxFunction("Oops!","Something went wrong. Please start again.","Retry","Cancel");
 
         }
         return 0;
@@ -354,8 +390,6 @@ public class GamePlayActivity extends AppCompatActivity {
 
         if(index==QuesBank.length())
         {
-            if (gameCountDownTimer!=null)
-                gameCountDownTimer.cancel();
             setButtonFunction(false);
             submitUserScore();
 
@@ -371,83 +405,92 @@ public class GamePlayActivity extends AppCompatActivity {
 
 
 
-//    Completed function
+    //    Completed function
 //0.Init()
 //1.SetIntentFunction
 //2.alertBoxFunction
 //3.setEpochTime
 //4.setButtonFunction
 //5. ButtonFunction {0-9 ,c,b}
-private void init(){
-    TextViewCountDown=(TextView) findViewById(R.id.countDownTextView);
-    TextViewCountDown.setTextColor(Color.parseColor("#000000"));
-    TextViewUserName=(TextView)findViewById(R.id.userNameTextView);
-    TextViewUserName.setTextColor(Color.parseColor("#000000"));
-    TextViewQuestionCount=(TextView) findViewById(R.id.numberOfQuesTextView);
-    TextViewQuestionCount.setTextColor(Color.parseColor("#000000"));
-    TextViewQuestion=(TextView)findViewById(R.id.questionTextView);
-    TextViewQuestion.setTextColor(Color.parseColor("#000000"));
-    TextViewAnswer=(TextView) findViewById(R.id.answerTextView);
-    TextViewAnswer.setTextColor(Color.parseColor("#000000"));
-    b0=(Button) findViewById(R.id.buttonNo0);
-    b1=(Button) findViewById(R.id.buttonNo1);
-    b2=(Button) findViewById(R.id.buttonNo2);
-    b3=(Button) findViewById(R.id.buttonNo3);
-    b4=(Button) findViewById(R.id.buttonNo4);
-    b5=(Button) findViewById(R.id.buttonNo5);
-    b6=(Button) findViewById(R.id.buttonNo6);
-    b7=(Button) findViewById(R.id.buttonNo7);
-    b8=(Button) findViewById(R.id.buttonNo8);
-    b9=(Button) findViewById(R.id.buttonNo9);
-    bc=(Button) findViewById(R.id.buttonNoC);
-    bb=(Button) findViewById(R.id.buttonNoB);
-    progressBar=(ProgressBar) findViewById(R.id.answerProgressBar);
-    DatabaseHandler db = new DatabaseHandler(this);
-    JSONObject jsonObject=db.fetchUserData(db.lastInsertedRowUserData());
-    try{
-        TextViewUserName.setText(jsonObject.getString("userName"));
-        userName=jsonObject.getString("userName");
+    private void init(){
+        TextViewCountDown=(TextView) findViewById(R.id.countDownTextView);
+        TextViewCountDown.setTextColor(Color.parseColor("#000000"));
+        TextViewUserName=(TextView)findViewById(R.id.userNameTextView);
+        TextViewUserName.setTextColor(Color.parseColor("#000000"));
+        TextViewQuestionCount=(TextView) findViewById(R.id.numberOfQuesTextView);
+        TextViewQuestionCount.setTextColor(Color.parseColor("#000000"));
+        TextViewQuestion=(TextView)findViewById(R.id.questionTextView);
+        TextViewQuestion.setTextColor(Color.parseColor("#000000"));
+        TextViewAnswer=(TextView) findViewById(R.id.answerTextView);
+        TextViewAnswer.setTextColor(Color.parseColor("#000000"));
+        b0=(Button) findViewById(R.id.buttonNo0);
+        b1=(Button) findViewById(R.id.buttonNo1);
+        b2=(Button) findViewById(R.id.buttonNo2);
+        b3=(Button) findViewById(R.id.buttonNo3);
+        b4=(Button) findViewById(R.id.buttonNo4);
+        b5=(Button) findViewById(R.id.buttonNo5);
+        b6=(Button) findViewById(R.id.buttonNo6);
+        b7=(Button) findViewById(R.id.buttonNo7);
+        b8=(Button) findViewById(R.id.buttonNo8);
+        b9=(Button) findViewById(R.id.buttonNo9);
+        bc=(Button) findViewById(R.id.buttonNoC);
+        bb=(Button) findViewById(R.id.buttonNoB);
+        progressBar=(ProgressBar) findViewById(R.id.answerProgressBar);
+        db = new DatabaseHandler(this);
+        gameCountDownTimer=null;rankCountDownTimer=null;progressBarCountDownTimer=null;
+        TextViewCountDown.setText("");
+        TextViewUserName.setText("");
+        TextViewQuestionCount.setText("");
+        TextViewQuestion.setText("");
+        TextViewAnswer.setText("");
+        QuesBank=null;
+        intentObj=null;
+        index=0;numOfWrongAns=0;numOfCorrectAns=0;quesSet=0;serverAnsDigits=0;
+        userName="";
+        startTime=0;endTime=0;countdownStartTime=0;countdownEndTime=0;countdownBoutEndTime=0;epochTime=0;
+        activityBackFlag=true;onPauseFlag=false;
+        totalUserScore=0.0;
     }
-    catch (Exception e)
-    {System.out.println("SettingUserNameFailed");        }
 
-}
-private void setIntentFunction(String className)
-{
-    if (className=="MainActivity")
-        intentObj=new Intent(this, MainActivity.class);
-    else if (className=="GamePlayActivity")
-        intentObj=new Intent(this, GamePlayActivity.class);
-    else if (className=="RankListActivity")
-        intentObj=new Intent(this, RankListActivity.class);
-    if(gameCountDownTimer!=null)
-        gameCountDownTimer.cancel();
-    if(rankCountDownTimer!=null)
-        gameCountDownTimer.cancel();
-    if(progressBarCountDownTimer!=null)
-        progressBarCountDownTimer.cancel();
-    startActivity(intentObj);
-}
+    private void setGameCountsToNull(){
+        if(gameCountDownTimer!=null)
+            gameCountDownTimer.cancel();
+        if(rankCountDownTimer!=null)
+            rankCountDownTimer.cancel();
+        if(progressBarCountDownTimer!=null)
+            progressBarCountDownTimer.cancel();
+        gameCountDownTimer=null;rankCountDownTimer=null;progressBarCountDownTimer=null;
+    }
 
-    private void alertBoxFunction(String Title, String Message, String PositiveButton, String NegativeButton, final String YES, final String NO){
+    private void SetUserName(){
+        JSONObject jsonObject=db.fetchUserData(db.lastInsertedRowUserData());
+        try{
+            TextViewUserName.setText(jsonObject.getString("userName"));
+            userName=jsonObject.getString("userName");
+        }
+        catch (Exception e)
+        {System.out.println("SettingUserNameFailed");}
+    }
+
+
+
+
+
+    private void alertBoxFunction(String Title, String Message, String PositiveButton, String NegativeButton){
         AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
-//        alertDialogBuilder.setMessage(Message)
-//                .setTitle(Title);
         alertDialogBuilder.setMessage((Html.fromHtml("<font color='#FFFFFF'>"+Message+"</font>")));
         alertDialogBuilder.setTitle((Html.fromHtml("<font color='#FFFFFF'>"+Title+"</font>")));
         alertDialogBuilder.setPositiveButton(PositiveButton, new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int id) {
-                setIntentFunction(YES);
+                startFunction();
 
             }
         });
         alertDialogBuilder.setNegativeButton(NegativeButton, new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int id) {
-                setIntentFunction(NO);
+                onBackPressed();
             }
         });
-
-
         AlertDialog alertDialog = alertDialogBuilder.create();
         alertDialog.show();
         alertDialog.getWindow().setBackgroundDrawableResource(android.R.color.background_dark);
@@ -461,7 +504,7 @@ private void setIntentFunction(String className)
             epochTime = date.getTime() / 1000;
         }
         catch (Exception e){
-            alertBoxFunction("Oops!","__Something went wrong. Please start again.","Retry","Cancel","GamePlayActivity","MainActivity");
+            alertBoxFunction("Oops!","__Something went wrong. Please start again.","Retry","Cancel");
 
         }
     }

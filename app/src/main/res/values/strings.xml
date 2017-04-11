@@ -3,14 +3,24 @@
     <string name="server_path">http://mathathon.herokuapp.com/</string>
     <!--<string name="server_path">http://172.16.4.101:8000/</string>-->
 
-    <string name="rank_list_path">genques/getranking/</string>
+    <string name="rank_list_path">genques/getranking1/</string>
     <string name="submit_score_path">genques/submitranking/</string>
     <string name="fetch_ques">genques/getquestion/</string>
     <string name="userName_check">login/checkusername/</string>
     <string name="user_Register">login/register/</string>
     <string name="user_login">login/login/</string>
     <string name="fetch_server_time">genques/fetchservertime/</string>
+    <string name="leader_board_path">genques/leaderboard/</string>
+    <string name="get_user_stat">login/getuserstats/</string>
+    <string name="get_user_friend">login/getfriendinfo/</string>
+    <string name="add_friend">login/addfriend/</string>
 
+    <string name="font_family_light">sans-serif-light</string>
+    <string name="font_family_medium">sans-serif-medium</string>
+    <string name="font_family_regular">sans-serif</string>
+    <string name="font_family_condensed">sans-serif-condensed</string>
+    <string name="font_family_black">sans-serif-black</string>
+    <string name="font_family_thin">sans-serif-thin</string>
 
 
 

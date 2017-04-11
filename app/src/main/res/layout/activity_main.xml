@@ -15,13 +15,22 @@
         android:id="@+id/calcOffTextView"
 
         android:textColor="#ffffff"
-        android:textSize="95dp"
+        android:textSize="80dp"
         android:textStyle="bold"
         android:layout_gravity="center" />
-    <View
-        android:layout_width="fill_parent"
-        android:layout_height="1dp"
-        android:background="@android:color/white"/>
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="30dp"
+        android:layout_marginRight="30dp">
+
+        <View
+            android:layout_width="fill_parent"
+            android:layout_height="1dp"
+            android:background="@android:color/white"/>
+    </LinearLayout>
 
     <LinearLayout
         android:orientation="horizontal"
@@ -39,16 +48,26 @@
                 android:textSize="20dp"
                 android:textColor="#ffffff"
                 android:layout_marginLeft="10dp"
-                android:layout_marginTop="10dp" />
+                android:layout_marginTop="10dp"
+                android:visibility="invisible" />
 
             <Button
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Logout"
-                android:id="@+id/logoutButton"
+                android:id="@+id/ButtonNameLogout"
                 android:layout_gravity="right|center_vertical"
                 android:visibility="invisible"
                 android:onClick="logoutButtonFunction"/>
+
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Profile"
+                android:id="@+id/ButtonNameProfile"
+                android:layout_gravity="left|center_vertical"
+                android:visibility="invisible"
+                android:onClick="ProfileFunction"/>
         </FrameLayout>
 
     </LinearLayout>
@@ -63,36 +82,32 @@
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:text="Play"
-            android:id="@+id/playButton"
+            android:id="@+id/ButtonNamePlay"
             android:onClick="playButtonFunction"/>
 
         <Button
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:text="Settings"
-            android:id="@+id/settingsButton"
-            android:onClick="settingsButtonFunction"/>
-
-    </LinearLayout>
-
-    <LinearLayout
-        android:orientation="horizontal"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content">
+            android:text="Leaderboard"
+            android:id="@+id/ButtonNameLeaderboard"
+            android:onClick="LeaderBoardButtonFunction"/>
 
         <Button
-            android:layout_width="188dp"
+            android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:text="Login"
-            android:id="@+id/LLButton"
-            android:onClick="LLButtonFunction"/>
+            android:id="@+id/ButtonNameLogin"
+            android:onClick="LoginButtonFunction"
+            android:layout_gravity="left|center_vertical"
+            android:visibility="visible" />
 
         <Button
-            android:layout_width="188dp"
+            android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:text="Register"
-            android:id="@+id/registerButton"
-            android:onClick="registerButtonFunction"/>
+            android:id="@+id/ButtonNameRegister"
+            android:onClick="registerButtonFunction" />
+
     </LinearLayout>
 
 </LinearLayout>

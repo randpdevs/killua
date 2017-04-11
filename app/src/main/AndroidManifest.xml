@@ -39,6 +39,14 @@
             android:noHistory="true"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.LoginActivity"/>
+        <activity android:name=".LeaderBoardActivity"
+            android:noHistory="true"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.LoginActivity"/>
+        <activity android:name=".ProfileActivity"
+            android:noHistory="true"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.LoginActivity"/>
 
     </application>
 
