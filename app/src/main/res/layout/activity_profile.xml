@@ -1,0 +1,220 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:paddingLeft="5dp">
+
+
+    <FrameLayout
+        android:id="@+id/frameLayout"
+        android:layout_width="270dp"
+        android:layout_height="170dp"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="-20dp"
+        android:background="@drawable/profile_topbar">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:id="@+id/textView3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:layout_centerHorizontal="true"
+                android:layout_marginBottom="40dp"
+                android:text="Profile"
+                android:textColor="#ffffff"
+                android:textSize="60dp" />
+        </RelativeLayout>
+
+    </FrameLayout>
+
+    <TextView
+        android:id="@+id/textViewUserStat"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/frameLayout"
+        android:layout_centerHorizontal="true"
+        android:layout_gravity="center"
+        android:layout_marginTop="10dp"
+        android:text="Stats"
+        android:textSize="30dp" />
+
+    <TextView
+        android:id="@+id/textViewNumOfGamePlayed"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignTop="@+id/textViewUserStat"
+        android:layout_gravity="left"
+        android:layout_marginTop="60dp"
+        android:paddingBottom="5dp"
+        android:paddingLeft="5dp"
+        android:text="Number of games played:"
+        android:textSize="22dp" />
+
+    <TextView
+        android:id="@+id/TextViewNumOfGamePlayedVal"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/textViewTotalScore"
+        android:layout_alignParentEnd="true"
+        android:layout_gravity="right"
+        android:paddingBottom="5dp"
+        android:paddingRight="5dp"
+        android:text="TextView"
+        android:textSize="22dp" />
+
+    <TextView
+        android:id="@+id/textViewTotalScore"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/textViewNumOfGamePlayed"
+        android:layout_gravity="left"
+        android:paddingBottom="5dp"
+        android:paddingLeft="5dp"
+        android:paddingTop="5dp"
+        android:text="Total score:"
+        android:textSize="22dp" />
+
+    <TextView
+        android:id="@+id/TextViewTotalScoreVal"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_below="@+id/TextViewNumOfGamePlayedVal"
+        android:layout_gravity="right"
+        android:paddingBottom="5dp"
+        android:paddingRight="5dp"
+        android:paddingTop="5dp"
+        android:text="TextView"
+        android:textSize="22dp" />
+
+    <TextView
+        android:id="@+id/textViewTotalCorrectAns"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/textViewTotalScore"
+        android:layout_gravity="left"
+        android:paddingBottom="5dp"
+        android:paddingLeft="5dp"
+        android:paddingTop="5dp"
+        android:text="Total correct answers:"
+        android:textSize="22dp" />
+
+    <TextView
+        android:id="@+id/TextViewTotalCorrectAnsVal"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/textViewTotalCorrectAns"
+        android:layout_alignParentEnd="true"
+        android:layout_gravity="right"
+        android:paddingBottom="5dp"
+        android:paddingRight="5dp"
+        android:paddingTop="5dp"
+        android:text="TextView"
+        android:textSize="22dp" />
+
+    <TextView
+        android:id="@+id/textViewTotalWrongAns"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/TextViewTotalWrongAnsVal"
+        android:layout_alignBottom="@+id/TextViewTotalWrongAnsVal"
+        android:layout_alignParentStart="true"
+        android:layout_gravity="left"
+        android:paddingLeft="5dp"
+        android:paddingTop="5dp"
+        android:text="Total wrong answers:"
+        android:textSize="22dp" />
+
+    <TextView
+        android:id="@+id/TextViewTotalWrongAnsVal"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_below="@+id/TextViewTotalCorrectAnsVal"
+        android:text="TextView"
+        android:layout_gravity="right"
+        android:paddingRight="5dp"
+        android:paddingTop="5dp"
+        android:textSize="22dp"/>
+
+
+    <TextView
+        android:id="@+id/textViewUserFriends"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignStart="@+id/textViewUserStat"
+        android:layout_below="@+id/textViewTotalWrongAns"
+        android:layout_gravity="center"
+        android:paddingTop="20dp"
+        android:text="Friends"
+        android:textSize="30dp" />
+
+    <EditText
+        android:id="@+id/editTextEnterUserName"
+        android:layout_width="300dp"
+        android:layout_height="50dp"
+        android:layout_below="@+id/textViewUserFriends"
+        android:layout_centerHorizontal="true"
+        android:ems="10"
+        android:hint="Enter username"
+        android:inputType="textPersonName"
+        android:paddingTop="10dp" />
+
+    <Button
+        android:id="@+id/buttonNameAddFriend"
+        android:layout_width="270dp"
+        android:layout_height="50dp"
+        android:layout_below="@+id/editTextEnterUserName"
+        android:layout_centerHorizontal="true"
+        android:background="@drawable/roundedbutton_register"
+        android:onClick="addFriendFunction"
+        android:text="Add friend"
+        android:textColor="#ffffff" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/buttonNameAddFriend"
+        android:layout_centerHorizontal="true"
+        android:orientation="vertical"
+        android:layout_marginTop="10dp"
+        android:id="@+id/UserProfileLayout">
+
+
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Username"
+                    android:layout_gravity="left"
+                    android:textSize="20dp"
+                    android:layout_marginLeft="20dp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Max score"
+                    android:layout_gravity="right|center_vertical"
+                    android:layout_marginRight="20dp"
+                    android:textSize="20dp" />
+            </FrameLayout>
+
+
+    </LinearLayout>
+
+
+</RelativeLayout>
+

@@ -1,14 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <TableRow xmlns:android="http://schemas.android.com/apk/res/android"
-    android:padding="5dp"
+    android:padding="15dp"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
     android:orientation="vertical"
     android:focusable="true"
-    android:id="@+id/leaderRowLayout">
+    android:id="@+id/leaderRowLayout"
+    >
 
     <TextView
+        android:paddingLeft="25dp"
         android:text="2"
         android:layout_width="60dp"
         android:layout_height="wrap_content"
@@ -16,6 +18,7 @@
         android:textSize="17dp"
         android:id="@+id/leaderRank"/>
     <TextView
+        android:paddingLeft="25dp"
         android:text="Cceenu"
         android:layout_width="150dp"
         android:layout_height="wrap_content"
@@ -23,6 +26,7 @@
         android:textSize="17dp"
         android:id="@+id/leaderUserName"/>
     <TextView
+        android:paddingLeft="20dp"
         android:text="50"
         android:layout_width="100dp"
         android:layout_height="wrap_content"

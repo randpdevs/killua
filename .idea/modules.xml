@@ -3,7 +3,7 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
-      <module fileurl="file://$PROJECT_DIR$/killua.iml" filepath="$PROJECT_DIR$/killua.iml" />
+      <module fileurl="file://$PROJECT_DIR$/calcoffmain.iml" filepath="$PROJECT_DIR$/calcoffmain.iml" />
     </modules>
   </component>
 </project>

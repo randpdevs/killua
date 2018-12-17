@@ -3,11 +3,12 @@
     <color name="colorPrimary">#3F51B5</color>
     <color name="colorPrimaryDark">#303F9F</color>
     <color name="colorAccent">#FF4081</color>
+
+
     <color name="Black">#000000</color>
     <color name="White">#8a8484</color>
     <color name="Grey">#e6e3e3</color>
     <color name="Green">#4cc229</color>
     <color name="Red">#f90000</color>
     <color name="MyRank">#c5f2fd</color>
-
 </resources>

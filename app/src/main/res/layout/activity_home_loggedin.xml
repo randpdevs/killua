@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    >
+
+
+    <FrameLayout
+        android:id="@+id/frameLayout"
+        android:layout_width="270dp"
+        android:layout_height="170dp"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="-20dp"
+        android:background="@drawable/layout_topbar">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:id="@+id/textView3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:layout_centerHorizontal="true"
+                android:layout_marginBottom="40dp"
+                android:text="CalcOff"
+                android:textColor="#ffffff"
+                android:textSize="60dp" />
+        </RelativeLayout>
+
+    </FrameLayout>
+
+    <Button
+        android:id="@+id/button_username"
+        android:layout_width="150dp"
+        android:layout_height="50dp"
+        android:layout_below="@+id/frameLayout"
+        android:background="@drawable/roundedbutton_play"
+        android:layout_centerHorizontal="true"
+        android:onClick="function_Profile"
+        android:text="username"
+        android:textColor="#ffffff"/>
+
+    <Button
+        android:id="@+id/button_play"
+        android:layout_width="250dp"
+        android:layout_height="50dp"
+        android:layout_alignStart="@+id/button_leaderboard"
+        android:layout_centerVertical="true"
+        android:background="@drawable/roundedbutton_play"
+        android:onClick="function_Play"
+        android:text="Play"
+        android:textColor="#ffffff" />
+
+    <Button
+        android:id="@+id/button_leaderboard"
+        android:layout_width="250dp"
+        android:layout_height="50dp"
+        android:layout_alignStart="@+id/frameLayout"
+        android:layout_below="@+id/button_play"
+        android:background="@drawable/roundedbutton_leaderboard"
+        android:onClick="function_Leaderboard"
+        android:text="Leaderboard"
+        android:textColor="#ffffff" />
+
+    <Button
+        android:id="@+id/button_login"
+        android:layout_width="250dp"
+        android:layout_height="50dp"
+        android:layout_alignStart="@+id/button_leaderboard"
+        android:layout_below="@+id/button_leaderboard"
+        android:background="@drawable/roundedbutton_logout"
+        android:onClick="function_Logout"
+        android:text="Logout"
+        android:textColor="#ffffff" />
+
+
+
+</RelativeLayout>
+

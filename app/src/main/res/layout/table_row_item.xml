@@ -1,46 +1,53 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <TableRow xmlns:android="http://schemas.android.com/apk/res/android"
-android:padding="5dp"
-android:layout_width="fill_parent"
-android:layout_height="fill_parent"
-android:orientation="vertical"
-android:focusable="true"
-    android:id="@+id/rankRowLayout">
+    android:id="@+id/rankRowLayout"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:layout_margin="10dp"
+    android:focusable="true"
+    android:orientation="vertical"
+    android:padding="5dp"
+    android:paddingLeft="20dp">
 
-<TextView
-    android:text="2"
-    android:layout_width="50dp"
-    android:layout_height="wrap_content"
-    android:layout_column="1"
-    android:textSize="17dp"
-    android:id="@+id/rank"/>
-<TextView
-    android:text="Cceenu"
-    android:layout_width="100dp"
-    android:layout_height="wrap_content"
-    android:layout_column="2"
-    android:textSize="17dp"
-    android:id="@+id/userName"/>
-<TextView
-    android:text="50"
-    android:layout_width="60dp"
-    android:layout_height="wrap_content"
-    android:layout_column="3"
-    android:textSize="17dp"
-    android:id="@+id/score"/>
-<TextView
-    android:text="100"
-    android:layout_width="65dp"
-    android:layout_height="wrap_content"
-    android:layout_column="4"
-    android:textSize="17dp"
-    android:id="@+id/correctAns"/>
-<TextView
-    android:text="50"
-    android:layout_width="60dp"
-    android:layout_height="wrap_content"
-    android:layout_column="5"
-    android:textSize="17dp"
-    android:id="@+id/wrongAns"/>
+    <TextView
+        android:id="@+id/rank"
+        android:layout_width="50dp"
+        android:layout_height="wrap_content"
+        android:layout_column="1"
+        android:layout_marginLeft="10dp"
+        android:text="2"
+        android:textSize="17dp" />
+
+    <TextView
+        android:id="@+id/userName"
+        android:layout_width="100dp"
+        android:layout_height="wrap_content"
+        android:layout_column="2"
+        android:text="Cceenu"
+        android:textSize="17dp" />
+
+    <TextView
+        android:id="@+id/score"
+        android:layout_width="60dp"
+        android:layout_height="wrap_content"
+        android:layout_column="3"
+        android:text="50"
+        android:textSize="17dp" />
+
+    <TextView
+        android:id="@+id/correctAns"
+        android:layout_width="65dp"
+        android:layout_height="wrap_content"
+        android:layout_column="4"
+        android:text="100"
+        android:textSize="17dp" />
+
+    <TextView
+        android:id="@+id/wrongAns"
+        android:layout_width="60dp"
+        android:layout_height="wrap_content"
+        android:layout_column="5"
+        android:text="50"
+        android:textSize="17dp" />
 </TableRow>

@@ -1,19 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.randpdevs.calcoff">
+    package="com.example.rakesh.calcoff">
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
     <application
         android:allowBackup="true"
-        android:icon="@mipmap/ic_launcher"
+        android:icon="@drawable/icon"
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
 
         <activity
-            android:name=".MainActivity"
-            android:theme="@style/AppTheme.Simple"
+            android:name=".Activity_Home_Page"
+            android:theme="@style/AppTheme"
+
             android:screenOrientation="portrait"
             android:noHistory="true">
             <intent-filter>
@@ -22,31 +23,38 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".GamePlayActivity"
-            android:noHistory="true"
-            android:screenOrientation="portrait"
-            android:theme="@style/AppTheme.GamePlay"/>
-        <activity android:name=".RankListActivity"
-            android:noHistory="true"
-            android:screenOrientation="portrait"
-            android:theme="@style/AppTheme.RankList"/>
 
-        <activity android:name=".LoginActivity"
+        <!--<activity android:name=".Activity_Home_Page"-->
+            <!--android:noHistory="true"-->
+            <!--android:screenOrientation="portrait"-->
+            <!--android:theme="@style/AppTheme"/>-->
+
+        <activity android:name=".Activity_Leaderboard"
             android:noHistory="true"
             android:screenOrientation="portrait"
-            android:theme="@style/AppTheme.LoginActivity"/>
-        <activity android:name=".RegisterActivity"
+            android:theme="@style/AppTheme"/>
+        <activity android:name=".Activity_Login"
             android:noHistory="true"
             android:screenOrientation="portrait"
-            android:theme="@style/AppTheme.LoginActivity"/>
-        <activity android:name=".LeaderBoardActivity"
+            android:theme="@style/AppTheme"/>
+        <activity android:name=".Activity_Play"
             android:noHistory="true"
             android:screenOrientation="portrait"
-            android:theme="@style/AppTheme.LoginActivity"/>
-        <activity android:name=".ProfileActivity"
+            android:theme="@style/AppTheme"/>
+        <activity android:name=".Activity_Register"
             android:noHistory="true"
             android:screenOrientation="portrait"
-            android:theme="@style/AppTheme.LoginActivity"/>
+            android:theme="@style/AppTheme"/>
+
+        <activity android:name=".Activity_Profile"
+            android:noHistory="true"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme"/>
+        <activity android:name=".Activity_Ranklist"
+            android:noHistory="true"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme"/>
+
 
     </application>
 

@@ -1,113 +1,28 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:weightSum="1"
-    android:background="#000000">
-
+    tools:context="com.example.rakesh.calcoff.MainActivity">
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/app_name"
-        android:id="@+id/calcOffTextView"
+        android:text="Splash Page"
+        android:textSize="50dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
-        android:textColor="#ffffff"
-        android:textSize="80dp"
-        android:textStyle="bold"
-        android:layout_gravity="center" />
+    <Button
+        android:id="@+id/button"
+        android:layout_width="274dp"
+        android:layout_height="81dp"
+        android:onClick="Function_Home_page"
+        android:text="HomePage"
+        tools:layout_editor_absoluteX="55dp"
+        tools:layout_editor_absoluteY="182dp" />
 
-    <LinearLayout
-        android:orientation="vertical"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="30dp"
-        android:layout_marginRight="30dp">
-
-        <View
-            android:layout_width="fill_parent"
-            android:layout_height="1dp"
-            android:background="@android:color/white"/>
-    </LinearLayout>
-
-    <LinearLayout
-        android:orientation="horizontal"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-
-        <FrameLayout
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/userNameDisplayTextView"
-                android:textSize="20dp"
-                android:textColor="#ffffff"
-                android:layout_marginLeft="10dp"
-                android:layout_marginTop="10dp"
-                android:visibility="invisible" />
-
-            <Button
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Logout"
-                android:id="@+id/ButtonNameLogout"
-                android:layout_gravity="right|center_vertical"
-                android:visibility="invisible"
-                android:onClick="logoutButtonFunction"/>
-
-            <Button
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Profile"
-                android:id="@+id/ButtonNameProfile"
-                android:layout_gravity="left|center_vertical"
-                android:visibility="invisible"
-                android:onClick="ProfileFunction"/>
-        </FrameLayout>
-
-    </LinearLayout>
-
-    <LinearLayout
-        android:orientation="vertical"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="70dp">
-
-        <Button
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:text="Play"
-            android:id="@+id/ButtonNamePlay"
-            android:onClick="playButtonFunction"/>
-
-        <Button
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:text="Leaderboard"
-            android:id="@+id/ButtonNameLeaderboard"
-            android:onClick="LeaderBoardButtonFunction"/>
-
-        <Button
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:text="Login"
-            android:id="@+id/ButtonNameLogin"
-            android:onClick="LoginButtonFunction"
-            android:layout_gravity="left|center_vertical"
-            android:visibility="visible" />
-
-        <Button
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:text="Register"
-            android:id="@+id/ButtonNameRegister"
-            android:onClick="registerButtonFunction" />
-
-    </LinearLayout>
-
-</LinearLayout>
+</android.support.constraint.ConstraintLayout>
